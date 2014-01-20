@@ -31,6 +31,8 @@ module Resque
       self.reserve_queued_job_attempts = 1
       self.restricted_before_queued = false
 
+      include Resque::Helpers
+
       # Allows configuring via class accessors
       def self.configure
         yield self
@@ -130,7 +132,7 @@ module Resque
       end
 
       def tracking_class(tracking_key)
-        Resque.constantize(tracking_key.split(".")[2])
+        constantize(tracking_key.split(".")[2])
       end
 
       # The key to the redis set where we keep a list of runnable tracking_keys
